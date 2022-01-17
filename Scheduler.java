@@ -58,6 +58,7 @@ public class Scheduler {
   
   
  private void addDependencyOption(Task task) {
+        // if there are more than 1 tasks, prompt to add dependency when adding a new task
         if(taskService.getTasks().size() > 0) {
                 String choice = new String();
                 System.out.print("Add dependency? [y/n]");

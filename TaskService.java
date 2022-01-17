@@ -19,6 +19,7 @@ public class TaskService {
         }
       
         public Task createTask() {
+                // create a task, get title, description, and duration
                 System.out.print("Enter Title: ");
                 String title = scanner.nextLine();
                 System.out.print("Enter Description: ");
@@ -39,6 +40,7 @@ public class TaskService {
    
    
         public void addDependency(Task task) {
+                // add the selected dependency id to the task's dependencies;
                 System.out.println("=== Add Dependencies ===");
                 System.out.print("Enter id of selected dependency: ");
                 Integer dependencyId = selectId();
@@ -53,6 +55,7 @@ public class TaskService {
    
  
         private void removeDependency(Task task) {
+                // remove the specified dependency from the master task list
                 System.out.println("=== Remove Dependecies ===");
                 listTasks();
                 System.out.print("Enter id of selected dependency: ");
