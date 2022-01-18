@@ -1,14 +1,19 @@
+package controller;
+
+import model.Task;
+import dto.TaskDto;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
-public class Scheduler {
+public class SchedulerController {
        
 
    private Scanner scanner;
-   private TaskService taskService = new TaskService();
+
+   private TaskController taskController = new TaskController();
         
    public void main() {
       int input = 0;
@@ -21,21 +26,23 @@ public class Scheduler {
          switch(input) {
          
                 case 1: System.out.println("=== Create Task ===");
-                        Task task = taskService.createTask();
-                        addDependencyOption(task);
-                        taskService.add(task);                    
+                        TaskDto taskDto = createTask();
+                        taskController.createTask(taskDto);               
                         break;
                 
                 case 2: System.out.println("=== List Tasks ===");
-                        taskService.listTasks();
+                        taskController.listTasks();
                         break;        
                 
-                case 3: taskService.listTasks();
+                case 3: taskController.listTasks();
                         System.out.println("=== Edit Task ==="); 
-                        taskService.editTask();       
+
+                        taskController.editTask(getTaskId());
+                        
                         break;
                 case 4: System.out.println("=== Compute Schedule ===");
-                        taskService.printTaskSchedule();
+
+                        taskController.computeSchedule(getTaskId());
                 default:
                         break;
          }
@@ -56,21 +63,36 @@ public class Scheduler {
         System.out.print("Enter option: ");        
   }
   
+  private TaskDto createTask() {
+         // create a task dto, get title, description, and duration
+        System.out.print("Enter Title: ");
+        String title = scanner.nextLine();
+        System.out.print("Enter Description: ");
+        String description = scanner.nextLine();
+        System.out.print("Enter Duration: ");
+        int duration = Integer.valueOf(scanner.nextLine());
+        TaskDto taskDto = new TaskDto();
+        taskDto.setTitle(title);
+        taskDto.setDescription(description);
+        taskDto.setDuration(duration);
+        
+        return taskDto;
+                
+  }
   
- private void addDependencyOption(Task task) {
-        // if there are more than 1 tasks, prompt to add dependency when adding a new task
-        if(taskService.getTasks().size() > 0) {
-                String choice = new String();
-                System.out.print("Add dependency? [y/n]");
-                choice = scanner.nextLine();
-                if(choice != null && choice.toLowerCase().equals("y")) {
-                    taskService.listTasks();    
-                    taskService.addDependency(task);
-                }
-        }
- } 
+  private Integer getTaskId() {
+        System.out.print("Select task id: ");
+        Integer taskId = selectId();
+        return taskId;
+  }
   
-
+  
+ 
+ private void renderTask(TaskDto taskDto) {
+        System.out.println(taskDto.toString());
+ }
+  
+ 
  private Integer selectId() {
         Integer option = Integer.valueOf(scanner.nextLine());
         return option;

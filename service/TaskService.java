@@ -1,3 +1,7 @@
+package service;
+
+import model.Task;
+import dto.TaskDto;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -18,21 +22,15 @@ public class TaskService {
                 }
         }
       
-        public Task createTask() {
+        public Task createTask(TaskDto taskDto) {
                 // create a task, get title, description, and duration
-                System.out.print("Enter Title: ");
-                String title = scanner.nextLine();
-                System.out.print("Enter Description: ");
-                String description = scanner.nextLine();
-                System.out.print("Enter Duration: ");
-                int duration = Integer.valueOf(scanner.nextLine());
-
+                
                 int id = tasks.size();
                 // Create task
                 Task task = new Task(id);
-                task.setTitle(title);
-                task.setDescription(description);
-                task.setDuration(duration);
+                task.setTitle(taskDto.getTitle());
+                task.setDescription(taskDto.getDescription());
+                task.setDuration(taskDto.getDuration());
 
                 return task;
         }
@@ -67,10 +65,8 @@ public class TaskService {
                 }
         }
         
-        public void editTask() {
-                System.out.print("Select task id: ");
-                Integer taskId = selectId();
-                Task task = selectTaskById(taskId);
+        public void editTask(Task task) {
+       
                 if(task != null) {
                         System.out.println("=== Edit Task ===");
                         System.out.println("[1] Add Dependency");
@@ -93,12 +89,10 @@ public class TaskService {
                 
         }
         
-        public void printTaskSchedule() {
-                // select task
-                System.out.print("Select Task by Id: ");
-                Integer option = selectId();
-                Task task = selectTaskById(option);
+        public void printTaskSchedule(Integer id) {
+                Task task = selectTaskById(id);
                 LocalDate startDate = LocalDate.now();
+                
                 scheduleTask(task, startDate);
                 
                 tasks.sort(null);
@@ -111,7 +105,7 @@ public class TaskService {
         }
 
     
-        private Task selectTaskById(Integer id) {
+        public Task selectTaskById(Integer id) {
                 // filter the list of tasks according to the given id
                 List<Task> filteredTasks = Optional.ofNullable(tasks).orElse(new ArrayList<Task>()).stream().filter( (task) -> task.getId().equals(id) ).collect(Collectors.toList());
                 Task selectedTask = null;

@@ -1,8 +1,10 @@
+package dto;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-public class Task implements Comparable<Task>{
+public class TaskDto implements Comparable<TaskDto>{
    
    private Integer id;
    private String title;
@@ -12,12 +14,12 @@ public class Task implements Comparable<Task>{
    private LocalDate startDate;
    private LocalDate endDate;
    
-   public Task(Integer id) {
-        this.id = id;
-   }
-   
    public Integer getId() {
         return id;
+   }
+   
+   public void setId(Integer id) {
+        this.id = id;
    }
    
    public String getTitle() {
@@ -82,9 +84,9 @@ public class Task implements Comparable<Task>{
    }
    
    @Override
-   public int compareTo(Task otherTask) {
+   public int compareTo(TaskDto otherTask) {
         if(startDate == null) return -1;
-        
+        if(otherTask.getStartDate() == null) return 1;
         return startDate.compareTo(otherTask.getStartDate());
    }
   
