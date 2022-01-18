@@ -41,8 +41,7 @@ public class SchedulerController {
                         
                         break;
                 case 4: System.out.println("=== Compute Schedule ===");
-
-                        taskController.computeSchedule(getTaskId());
+                        taskController.computeSchedule();
                 default:
                         break;
          }

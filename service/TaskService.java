@@ -89,11 +89,13 @@ public class TaskService {
                 
         }
         
-        public void printTaskSchedule(Integer id) {
-                Task task = selectTaskById(id);
-                LocalDate startDate = LocalDate.now();
-                
-                scheduleTask(task, startDate);
+        public void printTaskSchedule() {
+                //Task task = selectTaskById(id);
+
+                for(Task task: tasks) {
+                  LocalDate startDate = LocalDate.now();
+                  scheduleTask(task, startDate);  
+                }
                 
                 tasks.sort(null);
 
@@ -146,18 +148,15 @@ public class TaskService {
                                 Task dependencyTask = selectTaskById(task.getDependencies().get(x));
                                 // call the function recursively
                                 startDate = scheduleTask(dependencyTask, startDate);
-                              
+                         
                         }
-                }
-                
+                } 
                 // once a task with no dependency is found, set today as the start date
                 task.setStartDate(startDate);
                 
                 // add the duration of each task to the startDate and set it as the endDate;
                 startDate = startDate.plusDays(task.getDuration());
                 task.setEndDate(startDate);
-                //dependencies.add(task.getDuration());
-                
                 // return new endDate as the next startDate of the task
                 return startDate;
         }

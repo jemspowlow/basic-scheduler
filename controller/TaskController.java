@@ -38,8 +38,8 @@ public class TaskController {
                 taskService.editTask(task);
         }
         
-        public void computeSchedule(Integer id) {
-                taskService.printTaskSchedule(id);
+        public void computeSchedule() {
+                taskService.printTaskSchedule();
                 
         }
     
